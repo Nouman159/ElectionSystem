@@ -1,0 +1,55 @@
+.candidates-container {
+    border: 1px solid black;
+    padding: 20px;
+    margin-top: 20px;
+    /* width: auto; */
+    width: 50%;
+    height: auto;
+    margin: auto;
+    margin-top: 20px;
+}
+
+.candidate-label {
+    display: block;
+    margin-bottom: 10px;
+}
+
+.candidate-checkbox {
+    margin-right: 10px;
+}
+
+.candidate-name {
+    font-weight: bold;
+}
+
+.candidate-party {
+    color: #888;
+}
+
+.vote-button {
+    margin-top: 10px;
+    padding: 4px;
+    border-radius: 6px solid black;
+}
+
+.election-card {
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    padding: 16px;
+    margin-bottom: 16px;
+    width: 45%;
+    margin-top: 20px;
+    margin-left: 3%;
+    float: left;
+}
+
+.election-card__name {
+    font-size: 24px;
+    margin-bottom: 8px;
+}
+
+.election-card__date,
+.election-card__time {
+    font-size: 16px;
+    margin-bottom: 4px;
+}
