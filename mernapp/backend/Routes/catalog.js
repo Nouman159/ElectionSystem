@@ -1,3 +1,5 @@
+// const multer = require('multer');
+const _ = require('lodash');
 const express = require('express');
 const router = express.Router();
 const { body, validationResult } = require('express-validator');
@@ -14,6 +16,51 @@ const jwtSecret = "Mynameisabcdefghijklmnopqrstuvwxyz";
 const Constituency = require('../models/Constituency');
 const adminJwtSecret = 'electionmanagementadminishere';
 const VotingResult = require('../models/votingResult');
+// const Election =requrie('../models/Election');
+
+
+router.get('/election/result/:electionId', async (req, res) => {
+    const { electionId } = req.params;  // will be useful
+    try {
+        const constituencies = await Constituency.find();
+        const votingResults = await VotingResult.find({ election: electionId }).populate('candidate', 'name');
+        const election = await VotingResult.find({ election: electionId }).populate('election', 'name');
+        constituencies.forEach(async (constituency) => {
+            const constituencyResults = votingResults.filter(result => result.constituency.toString() === constituency.name.toString());
+            // console.log(constituencyResults);
+            if (constituencyResults.length > 0) {
+                // Find the candidate with the highest votes
+                const winner = _.maxBy(constituencyResults, 'voteCount');
+                console.log(winner);
+                await VotingResult.updateOne({ _id: winner._id }, { isWinner: true });
+            }
+        });
+        console.log("a");
+        const groupedResults = [];
+        // const candidateNames = [];
+        for (const consti of constituencies) {
+            const name = consti.name;
+            const results = votingResults.filter(result => result.constituency.toString() === consti.name.toString());
+
+
+            // console.log(candidateNames);
+            console.log(results);
+            console.log(".....");
+            groupedResults.push({ name, results });
+        }
+        console.log("b");
+
+        // console.log(groupedResults);
+        //   res.status(200).json({ success: true });
+        console.log('Winners selected successfully.');
+        res.status(200).json({ success: true, elect: election, result: groupedResults, message: 'Election results created successfully.' });
+
+    } catch (error) {
+        console.error('Error selecting winners:', error);
+        res.status(500).json({ success: false, message: 'Failed to create voting results.' });
+
+    }
+})
 
 router.post('/create-voting-results/:electionId', async (req, res) => {
     const { electionId } = req.params;

@@ -18,7 +18,7 @@ export default function Voterhome() {
 
         fetchData();
     }, []);
-
+    console.log(data);
     return (
         <div>
             <Navbar />
@@ -37,12 +37,12 @@ export default function Voterhome() {
             {data.map((item, index) => (
                 <ElectionCard
                     key={item._id}
+                    id={item._id}
                     name={item.name}
                     date={item.electionDate}
                     startTime={item.startTime}
                     endTime={item.endTime}
                 />
-
             ))}
         </div>
     );

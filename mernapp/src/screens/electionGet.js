@@ -74,31 +74,33 @@ export default function Candidates({ constituency }) {
 
     return (
         <div>
-            {(info) ? "Already Voted" : (
-                <>
-                    <h2>Vote for constituency: {localStorage.constituency}</h2>
-                    <ToastContainer /> {/* Include the ToastContainer component */}
-                    <form className="candidates-container" onSubmit={handleSubmission}>
-                        {candidates.map((val, index) => (
-                            <label key={index} className="candidate-label">
-                                <input
-                                    type="checkbox"
-                                    name="option"
-                                    value={val.id}
-                                    checked={selectedOption === val.id}
-                                    onChange={(event) => {
-                                        handleCheckboxChange(event);
-                                    }}
-                                    className="candidate-checkbox"
-                                />
-                                <span className="candidate-name">{val.name}</span>
-                                <span className="candidate-party">{val.party}</span>
-                            </label>
-                        ))}
-                        <button className="vote-button btn-danger">Submit Vote</button>
-                    </form>
-                </>
-            )}
+            {(info) ? "Already Voted" :
+                candidates.length === 0 ? "No candidates in this constituency" :
+                    (
+                        <>
+                            <h2>Vote for constituency: {localStorage.constituency}</h2>
+                            <ToastContainer /> {/* Include the ToastContainer component */}
+                            <form className="candidates-container" onSubmit={handleSubmission}>
+                                {candidates.map((val, index) => (
+                                    <label key={index} className="candidate-label">
+                                        <input
+                                            type="checkbox"
+                                            name="option"
+                                            value={val.id}
+                                            checked={selectedOption === val.id}
+                                            onChange={(event) => {
+                                                handleCheckboxChange(event);
+                                            }}
+                                            className="candidate-checkbox"
+                                        />
+                                        <span className="candidate-name">{val.name}</span>
+                                        <span className="candidate-party">{val.party}</span>
+                                    </label>
+                                ))}
+                                <button className="vote-button btn-danger">Submit Vote</button>
+                            </form>
+                        </>
+                    )}
         </div>
     );
 }

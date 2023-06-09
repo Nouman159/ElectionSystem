@@ -1,3 +1,9 @@
+
+
+
+
+
+
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 const CreatePartyForm = () => {
@@ -45,34 +51,8 @@ const CreatePartyForm = () => {
         <div>
             <h2>Create a New Party</h2>
             <form onSubmit={handleSubmit} >
-                <div className="row mb-3 d-flex justify-content-center">
-                    <label htmlFor="name" className="col-sm-3 col-form-label">Name:</label>
-                    <div className="col-sm-9  ">
-                        <input
-                            type="text"
-                            id="name"
-                            name="name"
-                            style={{ width: "40%" }}
-                            value={partyData.name}
-                            onChange={handleChange}
-                            className="form-control"
-                        />
-                    </div>
-                </div>
-                <div className="row mb-3" >
-                    <label htmlFor="abbreviation" className="col-sm-3 col-form-label">Abbreviation:</label>
-                    <div className="col-sm-9">
-                        <input
-                            type="text"
-                            id="abbreviation"
-                            style={{ width: "40%" }}
-                            name="abbreviation"
-                            value={partyData.abbreviation}
-                            onChange={handleChange}
-                            className="form-control"
-                        />
-                    </div>
-                </div>
+
+
                 <div className="row mb-3">
                     <label htmlFor="symbol" className="col-sm-3 col-form-label">Symbol:</label>
                     <div className="col-sm-9">
@@ -87,6 +67,35 @@ const CreatePartyForm = () => {
                         />
                     </div>
                 </div>
+                <div className="row mb-3 d-flex justify-content-center">
+                    <div className="row mb-3" >
+                        <label htmlFor="abbreviation" className="col-sm-3 col-form-label">Abbreviation:</label>
+                        <div className="col-sm-9">
+                            <input
+                                type="text"
+                                id="abbreviation"
+                                style={{ width: "40%" }}
+                                name="abbreviation"
+                                value={partyData.abbreviation}
+                                onChange={handleChange}
+                                className="form-control"
+                            />
+                        </div>
+                    </div>     <label htmlFor="name" className="col-sm-3 col-form-label">Name:</label>
+                    <div className="col-sm-9  ">
+                        <input
+                            type="text"
+                            id="name"
+                            name="name"
+                            style={{ width: "40%" }}
+                            value={partyData.name}
+                            onChange={handleChange}
+                            className="form-control"
+                        />
+                    </div>
+                </div>
+
+                {/* ...other form fields... */}
                 <div className="row mb-3">
                     <label htmlFor="foundedYear" className="col-sm-3 col-form-label">Founded Year:</label>
                     <div className="col-sm-9">
@@ -142,6 +151,7 @@ const CreatePartyForm = () => {
                         />
                     </div>
                 </div>
+
                 <div className="row">
                     <div className="col-sm-9 offset-sm-3">
                         <button type="submit" className="btn btn-primary">Create Party</button>

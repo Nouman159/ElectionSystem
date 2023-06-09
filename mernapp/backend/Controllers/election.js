@@ -51,7 +51,7 @@ const createElection = async (req, res) => {
         // Save the election to the database
         const savedElection = await election.save();
 
-        res.status(201).json({ success: true, message: 'Election created successfully' });
+        res.status(201).json({ success: true, id: savedElection._id, message: 'Election created successfully' });
     } catch (error) {
         console.error('Error creating election:', error);
         res.status(500).json({ success: false, message: 'Failed to create election' });

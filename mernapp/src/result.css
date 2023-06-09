@@ -1,0 +1,18 @@
+.winner-row {
+    background-color: rgb(155, 232, 113);
+    /* Apply any other styles for winner rows */
+    /* border: 3px solid rgb(194, 171, 171); */
+}
+
+.table {
+    width: 50%;
+    margin: auto;
+    margin-top: 1%;
+    margin-bottom: 1%;
+    border: 2px solid gray;
+}
+
+.container {
+    border: 2px solid black;
+    padding-top: 2%;
+}

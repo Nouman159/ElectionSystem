@@ -1,3 +1,4 @@
+const multer = require('multer');
 const Party = require('../models/Party');
 const Candidate = require('../models/Candidate');
 const Constituency = require('../models/Constituency');
@@ -71,19 +72,33 @@ const createCandidate = async (req, res) => {
 };
 
 
-// Create a new party
+
+// Configure multer to store uploaded files in a designated folder
+// const storage = multer.diskStorage({
+//     destination: (req, file, cb) => {
+//         cb(null, 'uploads/'); // Set the destination folder where files will be stored
+//     },
+//     filename: (req, file, cb) => {
+//         const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1e9);
+//         const fileExtension = file.mimetype.split('/')[1];
+//         cb(null, file.fieldname + '-' + uniqueSuffix + '.' + fileExtension); // Set the filename for the uploaded file
+//     }
+// });
+
+// const upload = multer({ storage });
+
 const createParty = async (req, res) => {
     try {
         // Extract the party details from the request body
-        const { name, abbreviation, symbol, foundedYear, ideology, description, leader } = req.body;
+        const { name, abbreviation, foundedYear, symbol, ideology, description, leader } = req.body;
 
         // Create a new party instance
         const party = new Party({
             name,
             abbreviation,
-            symbol,
             foundedYear,
             ideology,
+            symbol,
             description,
             leader
         });
@@ -97,7 +112,6 @@ const createParty = async (req, res) => {
         res.status(500).json({ success: false, message: 'Failed to create party' });
     }
 };
-
 
 module.exports = {
     createCandidate,

@@ -17,6 +17,7 @@ import VotersList from './screens/displayVoters';
 import CreateElectionForm from './screens/createElection';
 import RemoveCandidate from './screens/removeCandidate';
 import Candidates from './screens/electionGet';
+import Result from './Election/result';
 function App() {
   return (
     <div className="App">
@@ -30,6 +31,7 @@ function App() {
           <Route exact path='/voters/list' element={< VotersList />} />
           <Route exact path='/remove/candidate' element={< RemoveCandidate />} />
           <Route exact path='/election/event' element={< Candidates />} />
+          <Route exact path={`/election/results/:id`} element={< Result />} />
 
 
 

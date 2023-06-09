@@ -25,11 +25,26 @@ const CreateElectionForm = () => {
                     endTime: electionData.endTime
                 })
             });
-
             const data = await response.json();
+            const res = await fetch(`http://localhost:5000/create-voting-results/${data.id}`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                }
+            });
+            const info = await res.json();
+            console.log("info " + info);
+            console.log(info.success);
             if (data.success) {
-                alert("Election created successfully");
-                navigate("/admin/dashboard");
+                console.log(data.id);
+                if (info.success) {
+                    alert("Election created successfully");
+                    navigate("/admin/dashboard");
+                }
+                else {
+                    alert("Error creating elections resultSchema");
+
+                }
             } else {
                 alert("Failed to create election");
             }
