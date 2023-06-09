@@ -1,49 +1,55 @@
 import React, { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
-const VotersList = () => {
-    const [voters, setVoters] = useState([]);
-
+const Voterhome = () => {
+    const [loading, setLoading] = useState(true);
+    const navigate = useNavigate();
+    const [electionEvents, setElectionEvents] = useState([]);
     useEffect(() => {
-        // Make an API request to fetch the voters list
-        console.log(localStorage.candidate_id);
-        fetch(`http://localhost:5000/voters/list/${localStorage.candidate_id}`)
-            .then(response => response.json())
-            .then(data => {
-                if (data.success) {
-                    setVoters(data.voters);
+        const fetchData = async () => {
+            try {
+                console.log(localStorage.getItem('authToken') + ' hello');
+                const response = await fetch('http://localhost:5000/getElectionEvents', {
+                    headers: {
+                        'Authorization': localStorage.getItem('authToken')
+                    }
+                });
+
+                if (response.status === 401) {
+                    navigate('/login');
                 } else {
-                    console.log(data.message);
+                    const data = await response.json();
+                    if (response.ok) {
+                        setElectionEvents(data.electionEvents);
+                        setLoading(false);
+                    } else {
+                        console.log('Failed to fetch election events:', response.status);
+                        navigate('/login');
+                    }
                 }
-            })
-            .catch(error => {
+            } catch (error) {
                 console.log('Error:', error);
-            });
-    }, []);
+            }
+        }
+        fetchData();
+    });
+
     return (
         <div>
-            <h2>Voters List</h2>
-            <table class="table">
-                <thead>
-                    <tr>
-                        <th scope="col">#</th>
-                        <th scope="col">Name</th>
-                        <th scope="col">Email</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {voters.map((voter, index) => (
-
-                        <tr>
-                            <th scope="row">{index + 1}</th>
-                            <td>{voter.name}</td>
-                            <td>{voter.email}</td>
-                        </tr>
-                    ))}
-
-                </tbody>
-            </table>
+            {
+                !loading ?
+                    <>
+                        <h2>Election Events</h2>
+                        <ul>
+                            {electionEvents.map((event, index) => (
+                                <li key={index}>{event.name}</li>
+                            ))}
+                        </ul>
+                    </> : "Loading Content"
+            }
         </div>
     );
 };
 
-export default VotersList;
+export default Voterhome;
+

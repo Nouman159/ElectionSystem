@@ -1,3 +1,4 @@
+const authorizationCheck = require('../middlewares/authMiddleware')
 // const multer = require('multer');
 const _ = require('lodash');
 const express = require('express');
@@ -108,7 +109,7 @@ router.post('/admin/create_constituency', adminController.createConstituency);
 
 router.post('/admin/create_election', electionController.createElection);
 
-router.get('/getElectionEvents', electionController.electionEvents);
+router.get('/getElectionEvents', authorizationCheck, electionController.electionEvents);
 
 router.post('/election/submit/:candidateId/:voterId', async (req, res) => {
     try {
@@ -162,7 +163,7 @@ router.get('/election_candidates/:constituency/:voterId', async (req, res) => {
 });
 
 
-router.get('/voters/list/:candidateId', async (req, res) => {
+router.get('/voters/list/:candidateId', authorizationCheck, async (req, res) => {
     try {
         const candidate = await Candidate.findOne({ _id: req.params.candidateId });
         if (!candidate) {

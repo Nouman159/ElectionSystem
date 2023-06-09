@@ -1,15 +1,25 @@
 import React, { useState, useEffect } from 'react';
 import Navbar from '../Components/Navbar';
 import ElectionCard from '../Components/ElectionEvents';
-
+import { useNavigate } from 'react-router-dom';
 export default function Voterhome() {
     const [data, setData] = useState([]);
-
+    const navigate = useNavigate();
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const response = await fetch("http://localhost:5000/getElectionEvents");
+                const response = await fetch("http://localhost:5000/getElectionEvents",
+                    {
+                        headers: {
+                            'Authorization': localStorage.getItem('authToken')
+                        }
+                    });
                 const json = await response.json();
+                console.log(json);
+                if (json.access === 'false') {
+                    navigate('/login');
+                    return;
+                }
                 setData(json.data);
             } catch (error) {
                 console.error('Error fetching data:', error);
@@ -17,7 +27,7 @@ export default function Voterhome() {
         };
 
         fetchData();
-    }, []);
+    }, [navigate]);
     console.log(data);
     return (
         <div>

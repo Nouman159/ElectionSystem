@@ -1,3 +1,4 @@
+const cors = require('cors');
 const express = require('express');
 const mongoDB = require('./managedb');
 const app = express();
@@ -9,6 +10,10 @@ app.use((req, res, next) => {
     res.setHeader("Access-Control-Allow-Headers", "Content-Type");
     next();
 })
+app.use(cors({
+    origin: 'http://localhost:3000'
+}));
+
 const conn = async () => {
     try {
         const connection = await mongoDB();
